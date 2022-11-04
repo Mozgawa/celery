@@ -1,4 +1,5 @@
 """Database models used by the SQLAlchemy result store backend."""
+import json
 from datetime import datetime
 
 import sqlalchemy as sa
@@ -21,7 +22,7 @@ class Task(ResultModelBase):
                    primary_key=True, autoincrement=True)
     task_id = sa.Column(sa.String(155), unique=True)
     status = sa.Column(sa.String(50), default=states.PENDING)
-    result = sa.Column(PickleType, nullable=True)
+    result = sa.Column(PickleType(pickler=json), nullable=True)
     date_done = sa.Column(sa.DateTime, default=datetime.utcnow,
                           onupdate=datetime.utcnow, nullable=True)
     traceback = sa.Column(sa.Text, nullable=True)
