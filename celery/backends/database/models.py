@@ -3,7 +3,7 @@
 from datetime import datetime
 
 import sqlalchemy as sa
-from sqlalchemy.types import LargeBinary
+from sqlalchemy.types import PickleType, LargeBinary
 
 from celery import states
 
