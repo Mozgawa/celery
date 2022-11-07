@@ -1,5 +1,6 @@
 """SQLAlchemy result store backend."""
 import logging
+import pickle
 from contextlib import contextmanager
 
 from vine.utils import wraps
@@ -112,6 +113,7 @@ class DatabaseBackend(BaseBackend):
     def _store_result(self, task_id, result, state, traceback=None,
                       request=None, **kwargs):
         """Store return value and state of an executed task."""
+        result = pickle.loads(result)
         session = self.ResultSession()
         with session_cleanup(session):
             task = list(session.query(self.task_cls).filter(self.task_cls.task_id == task_id))
