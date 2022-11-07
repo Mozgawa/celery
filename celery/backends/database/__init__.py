@@ -137,6 +137,7 @@ class DatabaseBackend(BaseBackend):
         # as we should not set it None
         columns = [column.name for column in self.task_cls.__table__.columns
                    if column.name not in {'id', 'task_id'}]
+        columns["result"] = str(columns["result"])
 
         # Iterate through the columns name of the table
         # to set the value from meta.
