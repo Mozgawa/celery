@@ -132,7 +132,6 @@ class DatabaseBackend(BaseBackend):
         meta = self._get_result_meta(result=result, state=state,
                                      traceback=traceback, request=request,
                                      format_date=False, encode=True)
-        meta["result"] = str(pickle.loads(meta["result"]))
    
         # Exclude the primary key id and task_id columns
         # as we should not set it None
