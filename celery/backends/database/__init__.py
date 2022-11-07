@@ -113,8 +113,6 @@ class DatabaseBackend(BaseBackend):
     def _store_result(self, task_id, result, state, traceback=None,
                       request=None, **kwargs):
         """Store return value and state of an executed task."""
-        result = pickle.loads(result)
-        result = str(result)
         session = self.ResultSession()
         with session_cleanup(session):
             task = list(session.query(self.task_cls).filter(self.task_cls.task_id == task_id))
@@ -134,7 +132,8 @@ class DatabaseBackend(BaseBackend):
         meta = self._get_result_meta(result=result, state=state,
                                      traceback=traceback, request=request,
                                      format_date=False, encode=True)
-
+        meta["result"] = str(pickle.loads(meta["result"]))
+   
         # Exclude the primary key id and task_id columns
         # as we should not set it None
         columns = [column.name for column in self.task_cls.__table__.columns
