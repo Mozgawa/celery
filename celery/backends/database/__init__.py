@@ -114,6 +114,7 @@ class DatabaseBackend(BaseBackend):
                       request=None, **kwargs):
         """Store return value and state of an executed task."""
         result = pickle.loads(result)
+        result = str(result)
         session = self.ResultSession()
         with session_cleanup(session):
             task = list(session.query(self.task_cls).filter(self.task_cls.task_id == task_id))

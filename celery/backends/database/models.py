@@ -56,8 +56,8 @@ class TaskExtended(Task):
     __table_args__ = {'sqlite_autoincrement': True, 'extend_existing': True}
 
     name = sa.Column(sa.String(155), nullable=True)
-    args = sa.Column(sa.LargeBinary, nullable=True)
-    kwargs = sa.Column(sa.LargeBinary, nullable=True)
+    args = sa.Column(PickleType, nullable=True)
+    kwargs = sa.Column(PickleType, nullable=True)
     worker = sa.Column(sa.String(155), nullable=True)
     retries = sa.Column(sa.Integer, nullable=True)
     queue = sa.Column(sa.String(155), nullable=True)
@@ -84,7 +84,7 @@ class TaskSet(ResultModelBase):
     id = sa.Column(sa.Integer, sa.Sequence('taskset_id_sequence'),
                    autoincrement=True, primary_key=True)
     taskset_id = sa.Column(sa.String(155), unique=True)
-    result = sa.Column(PickleType, nullable=True)
+    result = sa.Column(sa.String(155), nullable=True)
     date_done = sa.Column(sa.DateTime, default=datetime.utcnow,
                           nullable=True)
 
